@@ -7,13 +7,12 @@ app.use(cors());
 app.use(express.json());
 
 const ai = new GoogleGenAI({
-  apiKey: "AIzaSyCKSJ49B6J1idTQMmju-XxCC7iKouwX_lU", 
+  apiKey: "AIzaSyCKSJ49B6J1idTQMmju-XxCC7iKouwX_lU",
 });
 
 app.post("/ask", async (req, res) => {
   try {
     const { prompt } = req.body;
-    console.log("➡️ Prompt received:", prompt);
 
     const result = await ai.models.generateContent({
       model: "gemini-2.0-flash",
@@ -28,14 +27,15 @@ app.post("/ask", async (req, res) => {
 
     res.json({ response });
   } catch (err) {
-    console.error("Gemini Error:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(8000, () => {
-  console.log("Gemini backend running at http://localhost:8000");
+app.get("/", (req, res) => {
+  res.send("<h1>Gemini Clone</h1>");
 });
-app.use('/',(req,res)=>{
-  res.send("<h1>Gemini Clone </h1>")
-})
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Gemini backend running at http://localhost:${PORT}`);
+});

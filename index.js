@@ -26,7 +26,6 @@ app.post("/ask", async (req, res) => {
       throw new Error("No valid response from Gemini");
     }
 
-    console.log("Gemini response:", response);
     res.json({ response });
   } catch (err) {
     console.error("Gemini Error:", err);
